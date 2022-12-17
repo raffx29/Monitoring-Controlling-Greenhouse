@@ -4,8 +4,8 @@
 #include "EasyNextionLibrary.h"  // Library Nextion Display
 
 #define FIREBASE_HOST "https://monitoringcontrolling-1833b-default-rtdb.firebaseio.com/"
-#define WIFI_SSID "EVERYDAY 2.4G"   // Change the name of your WIFI
-#define WIFI_PASSWORD "twentynine"  // Change the password of your WIFI
+#define WIFI_SSID "BBP MEKTAN"   // Change the name of your WIFI
+#define WIFI_PASSWORD "1ndoJarwo"  // Change the password of your WIFI
 #define FIREBASE_Authorization_key "njNf49EFU3oxAQlOBwNtlv3M8eAnkEf6a9NQxIj2"
 
 #define LDRPIN 34
