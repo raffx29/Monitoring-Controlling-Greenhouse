@@ -31,22 +31,14 @@ FirebaseData firebaseData;
 void setup() {
   Serial.begin(9600);
   myNex.begin(9600);
+  
+  connectWifi();
   dht.begin();
+  
   pinMode(S1, OUTPUT);
   pinMode(S2, OUTPUT);
   digitalWrite(S1, HIGH);
   digitalWrite(S2, HIGH);
-
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.print("Connecting...");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-    delay(300);
-  }
-  Serial.println();
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
-  Serial.println();
 
   Firebase.begin(FIREBASE_HOST, FIREBASE_Authorization_key);
   Firebase.reconnectWiFi(true);
@@ -74,20 +66,34 @@ void loop() {
   myNex.NextionListen();
 }
 
+void connectWifi() {
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting...");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(300);
+  }
+  Serial.println();
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  Serial.printl
+
 void switchBtn() {
+  // Pomp Air
   if (Firebase.getString(firebaseData, "/ESP32_APP/S1")) {
     Switch1 = firebaseData.stringData();
   }
-  if (Firebase.getString(firebaseData, "/ESP32_APP/S2")) {
-    Switch2 = firebaseData.stringData();
-  }
-
-  if (Switch1 == "1") {
+  if (Switch1 == "1" || humTanah <= 30) {
     digitalWrite(S1, LOW);
   } else {
     digitalWrite(S1, HIGH);
   }
-  if (Switch2 == "1") {
+
+  // Lampu
+  if (Firebase.getString(firebaseData, "/ESP32_APP/S2")) {
+    Switch2 = firebaseData.stringData();
+  }
+  if (Switch2 == "1" || ldr >= 2000) {
     digitalWrite(S2, LOW);
   } else {
     digitalWrite(S2, HIGH);
