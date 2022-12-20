@@ -11,9 +11,9 @@
 #define FIREBASE_Authorization_key "njNf49EFU3oxAQlOBwNtlv3M8eAnkEf6a9NQxIj2"             // Token Firebase
 
 // Pin Sensor
-#define LDRPIN 34   // Pin LDR, Pin 34
-#define SOILPIN 35  // Pin Soil, Pin 35
-#define DHTPIN 32   // Pin DHT, Pin 32
+#define LDRPIN 14   // Pin LDR, Pin 34
+#define SOILPIN 12  // Pin Soil, Pin 35
+#define DHTPIN 13   // Pin DHT, Pin 32
 
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
