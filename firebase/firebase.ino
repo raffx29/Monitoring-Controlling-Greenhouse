@@ -1,16 +1,19 @@
-#include <FirebaseESP32.h>
-#include <WiFi.h>
-#include "DHT.h"
+// Library
+#include <FirebaseESP32.h>       // Library Firebase ESP32
+#include <WiFi.h>                // Library Wifi ESP32
+#include "DHT.h"                 // Library DHT
 #include "EasyNextionLibrary.h"  // Library Nextion Display
 
-#define FIREBASE_HOST "https://monitoringcontrolling-1833b-default-rtdb.firebaseio.com/"
-#define WIFI_SSID "BBP MEKTAN"   // Change the name of your WIFI
-#define WIFI_PASSWORD "1ndoJarwo"  // Change the password of your WIFI
-#define FIREBASE_Authorization_key "njNf49EFU3oxAQlOBwNtlv3M8eAnkEf6a9NQxIj2"
+// Firebase & Wifi Connect
+#define FIREBASE_HOST "https://monitoringcontrolling-1833b-default-rtdb.firebaseio.com/"  // Link Host Firebase
+#define WIFI_SSID "BBP MEKTAN"                                                            // Change the name of your WIFI
+#define WIFI_PASSWORD "1ndoJarwo"                                                         // Change the password of your WIFI
+#define FIREBASE_Authorization_key "njNf49EFU3oxAQlOBwNtlv3M8eAnkEf6a9NQxIj2"             // Token Firebase
 
-#define LDRPIN 34
-#define SOILPIN 35
-#define DHTPIN 32
+// Pin Sensor
+#define LDRPIN 34   // Pin LDR, Pin 34
+#define SOILPIN 35  // Pin Soil, Pin 35
+#define DHTPIN 32   // Pin DHT, Pin 32
 
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
