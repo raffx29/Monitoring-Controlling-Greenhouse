@@ -6,8 +6,8 @@
 
 // Firebase & Wifi Connect
 #define FIREBASE_HOST "https://monitoringcontrolling-1833b-default-rtdb.firebaseio.com/"  // Link Host Firebase
-#define WIFI_SSID "BBP MEKTAN"                                                            // Change the name of your WIFI
-#define WIFI_PASSWORD "1ndoJarwo"                                                         // Change the password of your WIFI
+#define WIFI_SSID "EVERYDAY 2.4G"                                                         // Change the name of your WIFI
+#define WIFI_PASSWORD "twentynine"                                                        // Change the password of your WIFI
 #define FIREBASE_Authorization_key "njNf49EFU3oxAQlOBwNtlv3M8eAnkEf6a9NQxIj2"             // Token Firebase
 
 // Pin Sensor
@@ -19,10 +19,10 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 // Relay
-int S1 = 5;   // WATER PUMP
-int S2 = 17;  // LAMPU
+int S1 = 5;   // Untuk Lampu
+int S2 = 17;  // Untuk Pompa Air
 
-String Switch1, Switch2;
+String Switch1, Switch2, status;
 
 float humUdara, tempUdara, humTanah;
 int ldr;
@@ -34,10 +34,10 @@ FirebaseData firebaseData;
 void setup() {
   Serial.begin(9600);
   myNex.begin(9600);
-  
+
   connectWifi();
   dht.begin();
-  
+
   pinMode(S1, OUTPUT);
   pinMode(S2, OUTPUT);
   digitalWrite(S1, HIGH);
@@ -51,14 +51,13 @@ void setup() {
 
 void loop() {
   readSensor();
-  switchBtn();
   nextSensor();
+  switchBtn();
 
-  Serial.print("Temperature: " + (String)tempUdara + " °C");
-  Serial.print("Humidity: " + (String)humUdara + " %");
-  Serial.print("Intensitas Cahaya : " + (String)ldr + " Cd");
-  Serial.print("Kelembaban Tanah : " + (String)humTanah + " %");
-  Serial.println();
+  Serial.println("Temperature: " + (String)tempUdara + " °C");
+  Serial.println("Humidity: " + (String)humUdara + " %");
+  Serial.println("Intensitas Cahaya : " + (String)ldr + " Cd");
+  Serial.println("Kelembaban Tanah : " + (String)humTanah + " %");
 
   Firebase.setFloat(firebaseData, "/ESP32_APP/TEMPUDARA", tempUdara);
   Firebase.setFloat(firebaseData, "/ESP32_APP/HUMUDARA", humUdara);
@@ -76,27 +75,24 @@ void connectWifi() {
     Serial.print(".");
     delay(300);
   }
-  Serial.println();
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
-  Serial.printl
+}
 
 void switchBtn() {
-  // Pomp Air
+  // Lampu
   if (Firebase.getString(firebaseData, "/ESP32_APP/S1")) {
     Switch1 = firebaseData.stringData();
   }
-  if (Switch1 == "1" || humTanah <= 30) {
+  if (Switch1 == "1" || ldr >= 2000) {
     digitalWrite(S1, LOW);
   } else {
     digitalWrite(S1, HIGH);
   }
 
-  // Lampu
+  // Pompa Air
   if (Firebase.getString(firebaseData, "/ESP32_APP/S2")) {
     Switch2 = firebaseData.stringData();
   }
-  if (Switch2 == "1" || ldr >= 2000) {
+  if (Switch2 == "1" || humTanah <= 30) {
     digitalWrite(S2, LOW);
   } else {
     digitalWrite(S2, HIGH);
